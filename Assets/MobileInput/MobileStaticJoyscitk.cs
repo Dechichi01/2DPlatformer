@@ -8,26 +8,17 @@ public class MobileStaticJoyscitk : MonoBehaviour {
     [SerializeField] private StaticJoystickInputArea _inputArea;
     [SerializeField] private RectTransform _inputIndicator;
 
-    private Vector2 _movementInput;
+    private Vector2 _inputValue;
     private Vector2 _jumpInput;
 
     private LeanFinger _currFinger;
 
-    public Vector2 MovementInput
+    public Vector2 InputValue
     {
         get
         {
-            Vector2 result = _movementInput;
-            _movementInput = Vector2.zero;
-            return result;
-        }
-    }
-    public Vector2 JumpInput
-    {
-        get
-        {
-            Vector2 result = _jumpInput;
-            _jumpInput = Vector2.zero;
+            Vector2 result = _inputValue;
+            _inputValue = Vector2.zero;
             return result;
         }
     }
@@ -50,9 +41,9 @@ public class MobileStaticJoyscitk : MonoBehaviour {
     {
         if (_currFinger != null)
         {
-            _movementInput = _inputArea.GetMovementInput(_currFinger.ScreenPosition);
+            _inputValue = _inputArea.GetMovementInput(_currFinger.ScreenPosition);
             _inputIndicator.position = (Vector2)_inputArea.Area.position +
-                _movementInput * _inputArea.InputRadius;
+                _inputValue * _inputArea.InputRadius;
         }
     }
 
@@ -71,11 +62,7 @@ public class MobileStaticJoyscitk : MonoBehaviour {
         {
             _currFinger = null;
             _inputIndicator.gameObject.SetActive(false);
-            if (finger.Tap)
-            {
-                _jumpInput = _inputArea.GetMovementInput(finger.StartScreenPosition);
-            }
-            _movementInput = Vector2.zero;
+            _inputValue = Vector2.zero;
         }
     }
 
@@ -86,14 +73,6 @@ public class MobileStaticJoyscitk : MonoBehaviour {
 
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(_inputArea.Area.position, _inputArea.InputRadius);
-
-        if (_currFinger == null)
-            return;
-
-        Gizmos.color = Color.red;
-        Gizmos.DrawCube(
-            (Vector2)_inputArea.Area.position + _inputArea.GetMovementInput(_currFinger.ScreenPosition) * _inputArea.InputRadius,
-            Vector3.one * 50);
     }
 }
 

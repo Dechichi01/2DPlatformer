@@ -35,7 +35,7 @@ public class CameraFollow : MonoBehaviour {
 
         if (focusArea.velocity.x != 0)
         {
-            Vector2 moveInput = inputManager.GetMovementInput();
+            Vector2 moveInput = inputManager.GetJoystickInput();
             lookAheadDirX = Mathf.Sign(focusArea.velocity.x);
             if ((Mathf.Sign(moveInput.x) == Mathf.Sign(focusArea.velocity.x) && moveInput.x != 0))
             {

@@ -14,6 +14,7 @@ public class MobileButton : MonoBehaviour {
     public System.Action OnPress;
     public System.Action OnRelease;
     public System.Action OnTap;
+    public System.Action OnHold;
     
     private void Start()
     {
@@ -65,6 +66,17 @@ public class MobileButton : MonoBehaviour {
             }
 
             finger = null;
+        }
+    }
+
+    private void OnFingerHoldDown(LeanFinger leanFinger)
+    {
+        if (finger == leanFinger)
+        {
+            if (OnHold != null)
+            {
+                OnHold();
+            }
         }
     }
 

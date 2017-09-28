@@ -2,17 +2,18 @@
 
 public class PlayerInputManager : MonoBehaviour {
 
-    [SerializeField] MobileJoystick _joystick;
+    [SerializeField] MobileStaticJoyscitk _joystick;
+    [SerializeField] MobileButton _jumpButton;
     [SerializeField] MobileButton _shootButton;
     [SerializeField] MobileButton _spHabilityButton;
 
     public FingerDragDetector DragDetect { get; private set; }
     public MobileButton ShootButton { get { return _shootButton; } }
+    public MobileButton JumpButton { get { return _jumpButton; } }
     public MobileButton SpecialHabilityButton { get { return _spHabilityButton; } }
 
-    public Vector2 GetMovementInput()
+    public Vector2 GetJoystickInput()
     {
-        Vector2 _inputVal = _joystick.InputValue();
-        return new Vector2(_inputVal.x, Input.GetKeyDown(KeyCode.Space) ? 1: 0);
+        return _joystick.InputValue;
     }
 }
