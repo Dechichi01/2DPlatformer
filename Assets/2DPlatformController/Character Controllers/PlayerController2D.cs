@@ -8,6 +8,7 @@ public class PlayerController2D : CharacterController2D
 {
     [SerializeField] private Transform _bodySprite;
     [SerializeField] private PlayerAim _playerAim;
+    [SerializeField] private CharacterAnimController _animCtrl;
      
     private PlayerInputManager _inputManager;
 
@@ -47,7 +48,11 @@ public class PlayerController2D : CharacterController2D
         Vector2 movementDelta = ProcessMovementInput(movementInput);
         ApplyMovement(movementDelta);
 
-        float aimAngle = Mathf.Atan(joystickInput.y / joystickInput.x);
+        _animCtrl.SetMovement(movementDelta.x / Time.deltaTime, _bodySprite.right);
+        _animCtrl.SetOnGround(_state.Grounded);
+
+        float aimAngle = joystickInput.x == 0 ? 0 : Mathf.Atan(joystickInput.y/joystickInput.x)*Mathf.Rad2Deg;
+        _playerAim.SetAimRotation(aimAngle);
     }
 
     protected override void OnCharacterTurn(int turnDir)
@@ -70,5 +75,11 @@ public class PlayerController2D : CharacterController2D
     private void OnShootButtonReleased()
     {
         _actionsQueue.Enqueue(CharacterActions.Shoot);
+    }
+
+    protected override void Jump(ref Vector2 inputValue)
+    {
+        base.Jump(ref inputValue);
+        _animCtrl.Jump();
     }
 }
