@@ -41,7 +41,6 @@ public class PlayerController2D : CharacterController2D
     protected override void Update()
     {
         Vector2 joystickInput= _inputManager.GetJoystickInput();
-
         Vector2 movementInput = new Vector2(joystickInput.x, 0);
         ProcessActionQueue(ref movementInput);        
 

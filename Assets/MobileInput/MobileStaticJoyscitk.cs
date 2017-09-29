@@ -17,9 +17,7 @@ public class MobileStaticJoyscitk : MonoBehaviour {
     {
         get
         {
-            Vector2 result = _inputValue;
-            _inputValue = Vector2.zero;
-            return result;
+            return _inputValue;
         }
     }
 
